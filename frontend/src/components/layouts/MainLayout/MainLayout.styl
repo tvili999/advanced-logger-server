@@ -1,0 +1,32 @@
+.MainLayout
+    display flex
+    flex-flow column nowrap
+    align-items: stretch
+    gap 12px
+    padding 12px
+    box-sizing: border-box
+    overflow hidden
+
+    &__buttons
+        padding 12px
+        box-sizing: border-box
+        display flex
+        flex-flow row nowrap
+        align-items: stretch
+        background-color: #eee
+        gap 12px
+
+    &__content
+        display flex
+        flex-flow row nowrap
+        align-items: stretch
+        gap 12px
+        overflow hidden
+
+        > *
+            overflow auto
+            padding 12px
+            box-sizing: border-box
+            background-color: #eee
+            min-width: 45vw
+            max-width: 50vw
