@@ -1,20 +1,20 @@
 Arguments: 
-  /usr/bin/node /usr/bin/yarn
+  /usr/local/bin/node /opt/yarn-v1.22.17/bin/yarn.js
 
 PATH: 
-  /tmp/yarn--1645575418861-0.8307619113341609:/home/tvili999/bolt-workspace/libs/advanced-logger-server/backend/node_modules/.bin:/home/tvili999/.config/yarn/link/node_modules/.bin:/usr/libexec/lib/node_modules/npm/bin/node-gyp-bin:/usr/lib/node_modules/npm/bin/node-gyp-bin:/usr/bin/node_modules/npm/bin/node-gyp-bin:/home/tvili999/.autojump/bin:/home/tvili999/.autojump/bin:/home/tvili999/.autojump/bin:/home/tvili999/.autojump/bin:/home/tvili999/.cargo/bin:/usr/local/sbin:/usr/local/bin:/usr/bin:/usr/lib/jvm/default/bin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl:/home/tvili999/.yarn/bin:/home/tvili999/go/bin:/home/tvili999/go/bin
+  /tmp/yarn--1645611159446-0.5060694374137109:/app/node_modules/.bin:/home/node/.config/yarn/link/node_modules/.bin:/home/node/.yarn/bin:/usr/local/libexec/lib/node_modules/npm/bin/node-gyp-bin:/usr/local/lib/node_modules/npm/bin/node-gyp-bin:/usr/local/bin/node_modules/npm/bin/node-gyp-bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
 Yarn version: 
   1.22.17
 
 Node version: 
-  17.5.0
+  17.3.1
 
 Platform: 
   linux x64
 
 Trace: 
-  Error: EACCES: permission denied, unlink '/home/tvili999/bolt-workspace/libs/advanced-logger-server/backend/node_modules/.bin/is-ci'
+  Error: EACCES: permission denied, unlink '/app/node_modules/.bin/is-ci'
 
 npm manifest: 
   {

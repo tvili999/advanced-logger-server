@@ -40,27 +40,34 @@ module.exports = container => container
                     throw "Directory does not exist"
                 return fs.readdirSync(dir)
             },
+            getLogModify: (session, date, time) => {
+                const filePath = getPath(session, date, time);
+                if(!fs.existsSync(filePath))
+                    throw "Log does not exist";
+
+                return fs.statSync(filePath).mtimeMs;
+            },
             getLog: (session, date, time) => {
                 const filePath = getPath(session, date, time);
                 if(!fs.existsSync(filePath))
                     throw "Log does not exist";
-                return fs.readFileSync(filePath)
+
+                return fs.readFileSync(filePath);
             },
             getSession: (session) => {
                 if(!session)
                     session = "default";
-                const sessionDir = Buffer.from(session).toString('base64').replace('+', '_');
-                mkdir(sessionDir);
+                mkdir(session);
 
                 return {
                     appendLog: (text) => {
                         const date = new Date();
                         const dateDir = `${date.getFullYear()}-${date.getMonth()}-${date.getDay()}`;
-                        const timePath = `${dateDir}_${date.getHours()}`;
+                        const timePath = date.getHours().toString();
 
-                        mkdir(sessionDir, dateDir);
+                        mkdir(session, dateDir);
 
-                        const filePath = getPath(sessionDir, dateDir, timePath);
+                        const filePath = getPath(session, dateDir, timePath);
                         fs.appendFileSync(filePath, text);
                         fs.appendFileSync(filePath, "\n");
                     }

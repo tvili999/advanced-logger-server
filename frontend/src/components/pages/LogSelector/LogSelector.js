@@ -11,29 +11,28 @@ class LogSelector extends React.Component {
         logs: []
     }
 
-    fetch = () => {
+    fetch = async () => {
+        if(this.props.selectedLog.log) {
 
+        }
+        else if(this.props.selectedLog.date) {
+            const logs = await this.props.selectedLog.getLogs();
+            this.setState({ logs });
+        }
+        else if(this.props.selectedLog.session) {
+            const dates = await this.props.selectedLog.getDates();
+            this.setState({ dates });
+        }
+        else {
+            const sessions = await this.props.selectedLog.getSessions();
+            this.setState({ sessions });
+        }
     }
 
     interval = null;
     componentDidMount() {
-        this.interval = setInterval(async () => {
-            if(this.props.selectedLog.log) {
-
-            }
-            else if(this.props.selectedLog.date) {
-                const logs = await this.props.selectedLog.getLogs();
-                this.setState({ logs });
-            }
-            else if(this.props.selectedLog.session) {
-                const dates = await this.props.selectedLog.getDates();
-                this.setState({ dates });
-            }
-            else {
-                const sessions = await this.props.selectedLog.getSessions();
-                this.setState({ sessions });
-            }
-        }, 1000);
+        this.fetch();
+        this.interval = setInterval(this.fetch, 1000);
     }
 
     componentWillUnmount() {
@@ -48,6 +47,11 @@ class LogSelector extends React.Component {
                     flexFlow: "column"
                 }}
             >
+                <button
+                    onClick={this.props.selectedLog.back}
+                >
+                    Back
+                </button>
                 {!this.props.selectedLog.session && (
                     this.state.sessions.map((x) => (
                         <Link

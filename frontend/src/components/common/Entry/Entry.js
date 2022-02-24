@@ -1,52 +1,52 @@
 import React from "react";
 import classnames from "classnames";
 
-import "./ConsoleEntry.styl";
+import "./Entry.styl";
 
 const toString = (value) => {
     if(typeof value === "object")
         return JSON.stringify(value);
     
-    return value.toString();
+    return value?.toString?.();
 }
 
-class ConsoleEntry extends React.Component {
+class Entry extends React.Component {
     state = {
         expanded: false
     }
     
     render() {
-        const entries = Array.isArray(this.props.entry[3]) ? this.props.entry.slice(3).map(arg => {
+        const entries = this.props.entry.slice(3).map(arg => {
             try {
-                return JSON.stringify(JSON.parse(arg), null, 4)
+                return JSON.stringify(arg, null, 4)
             }
-            catch {
-                return arg
+            catch(e) {
+                return arg?.toString?.()
             }
-        }) : []
+        });
         return (
             <div
-                className={classnames("ConsoleEntry", {
-                    "ConsoleEntry--error": this.props.entry[2] === "error",
-                    "ConsoleEntry--warn": this.props.entry[2] === "warn"
+                className={classnames("Entry", {
+                    "Entry--error": this.props.entry[2] === "error",
+                    "Entry--warn": this.props.entry[2] === "warn"
                 })}
             >
                 <div
-                    className="ConsoleEntry__label"
+                    className="Entry__label"
                     onClick={() => this.setState({ expanded: !this.state.expanded })}
                 >
-                    <span className="ConsoleEntry__type">
-                        {this.props.entry[2]}
+                    <span className="Entry__type">
+                        {toString(this.props.entry[1])}
                     </span>
-                    <span className="ConsoleEntry__message">
-                        {toString(this.props.entry[3])}
+                    <span className="Entry__message">
+                        {toString(this.props.entry.slice(2))}
                     </span>
-                    <span className="ConsoleEntry__date">
+                    <span className="Entry__date">
                         {new Date(this.props.entry[0]).toTimeString().substring(0, 8)}
                     </span>
                 </div>
                 {this.state.expanded && (
-                    <div className="ConsoleEntry__content">
+                    <div className="Entry__content">
                         {entries.map((x, i) => (
                             <pre key={i}>
                                 {x}
@@ -59,4 +59,4 @@ class ConsoleEntry extends React.Component {
     }
 }
 
-export default ConsoleEntry;
+export default Entry;

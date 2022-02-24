@@ -11,9 +11,6 @@ const MainLayout = ({ children }) => (
             <div className="MainLayout__console">
                 {children?.console}
             </div>
-            <div className="MainLayout__network">
-                {children?.network}
-            </div>
         </div>
     </div>
 )

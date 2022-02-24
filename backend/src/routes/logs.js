@@ -5,16 +5,9 @@ module.exports = container => container
         const store = await get("store");
 
         server.route(app => {
-            app.ws("/log", (ws, req) => {
-                let session = store.getSession(null);
+            app.ws("/log/:session", (ws, req) => {
+                let session = store.getSession(req.params.session);
                 ws.on("message", (data) => {
-                    try {
-                        const message = JSON.parse(data);
-                        if(message?.[1] === "session" && message?.[3])
-                            session = store.getSession(message[3]);
-                    }
-                    catch {}
-
                     session?.appendLog?.(data);
                 })
             })

@@ -1,4 +1,4 @@
-.ConsoleEntry
+.Entry
     border-bottom: 1px solid #bdbdbd
 
     &__label
@@ -7,9 +7,11 @@
         align-items center
         padding 12px
 
+        > *:not(:first-child)
+            padding-left 8px
 
-    > *:not(:first-child)
-        padding-left 8px
+    &__type
+        width 100px
 
     &__message
         flex 1 1 0
@@ -26,4 +28,7 @@
 
     &__content
         overflow hidden
-        word-break: break-word
+
+        pre
+            word-break: break-word
+            white-space pre-wrap

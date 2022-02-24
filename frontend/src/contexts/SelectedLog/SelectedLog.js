@@ -5,6 +5,10 @@ import Cookies from "js-cookie";
 const { Provider, Consumer } = React.createContext();
 
 export class SelectedLogProvider extends React.Component {
+    lastLog = {
+
+    }
+
     state = {
         log: Cookies.get("_log"),
         session: Cookies.get("_session"),
@@ -38,23 +42,44 @@ export class SelectedLogProvider extends React.Component {
             Cookies.set("_log", log)
             this.setState({ log })
         },
+        lastLogData: null,
+        lastModified: null,
         getLog: async () => {
             const { session, date, log } = this.state;
-            const resp = await axios.get(`/api/sessions/${session}/${date}/${log}`);
+            this.lastLog ||= {};
+            if(this.lastLog.session !== session || this.lastLog.date !== date || this.lastLog.log !== log) {
+                this.lastLog = { session, date, log }
+            }
+            const modifiedQuery = this.lastLog.modified ? "?lastModified=" + this.lastLog.modified.toString() : "";
+            const resp = await axios.get(`/api/sessions/${session}/${date}/${log}` + modifiedQuery);
+            if(resp.headers["last-modified"])
+                this.lastLog.modified = parseInt(resp.headers["last-modified"]);
 
-            return resp.data;
+            if(resp.status === 200)
+                this.lastLog.data = resp.data;
+
+            return this.lastLog.data;
         },
         clear: () => {
+            Cookies.remove('_log');
+            Cookies.remove('_date');
+            Cookies.remove('_session');
             this.setState({ log: null, date: null, session: null });
         },
         back: () => {
             const { session, date, log } = this.state;
-            if(log)
+            if(log) {
                 this.setState({ log: null })
-            else if(date)
+                Cookies.remove('_log');
+            }
+            else if(date) {
                 this.setState({ date: null })
-            else if(session)
+                Cookies.remove('_date');
+            }
+            else if(session) {
                 this.setState({ session: null })
+                Cookies.remove('_session');
+            }
         }
     }
 

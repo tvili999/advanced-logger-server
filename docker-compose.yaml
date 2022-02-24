@@ -1,14 +1,12 @@
 version: '3'
 services:
   backend:
-    image: node:17
-    working_dir: /app
-    command: "yarn start"
+    build:
+      context: backend
     volumes:
       - ./backend:/app
       - log_data:/app/data
     tty: true
-    user: '1000'
     ports: 
       - 9000:9000
   frontend:

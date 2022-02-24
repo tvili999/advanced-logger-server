@@ -10,9 +10,21 @@ module.exports = container => container
             })
             app.get("/api/sessions/:id/:date/:time", (req, res) => {
                 const { id, date, time } = req.params;
-                const text = store.getLog(id, date, time).toString();
+
+                const lastMod = parseInt(store.getLogModify(id, date, time));
+                if(req.query.lastModified) {
+                    const cliLastMod = parseInt(req.query.lastModified);
+                    if(cliLastMod >= lastMod) {
+                        res.status(204).end();
+                        return;
+                    }
+                }
+
+                const content = store.getLog(id, date, time).toString();
+
                 res.set("Content-Type", "text/plain");
-                res.status(200).send(text);
+                res.set("last-modified", lastMod.toString())
+                res.status(200).send(content);
             })
             app.get("/api/sessions/:id/:date", (req, res) => {
                 const { id, date } = req.params;

@@ -1,4 +1,5 @@
 const express = require("express");
+require("express-async-errors")
 const ws = require("express-ws");
 const cors = require("cors");
 const morgan = require("morgan");
@@ -26,6 +27,15 @@ module.exports = container => container.configure(
         const config = await get("config");
 
         server.listen(app => {
+            app.use((err, req, res, next) => {
+                if (err) {
+                  res.status(403);
+                  res.json({ error: err.message });
+                }
+               
+                next(err);
+            });
+
             const port = config?.port || 9000;
 
             app.listen(port);

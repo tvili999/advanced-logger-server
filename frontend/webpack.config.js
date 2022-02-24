@@ -23,7 +23,7 @@ module.exports = {
 		port: 8900,
 		proxy: {
 			'/api': {
-				target: 'http://localhost:9000',
+				target: 'http://backend:9000',
 				secure: false
 			}
 		}
