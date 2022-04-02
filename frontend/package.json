@@ -4,7 +4,8 @@
     "main": "index.js",
     "license": "MIT",
     "scripts": {
-        "start": "yarn; yarn run webpack serve"
+        "start": "yarn; yarn run webpack serve",
+        "build": "yarn run webpack --env production"
     },
     "dependencies": {
         "@babel/core": "^7.17.5",
