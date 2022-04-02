@@ -1,0 +1,19 @@
+---
+kind: pipeline
+type: ssh
+name: pos-client-amd64
+
+server:
+  host: dev.central.agibolt.hu
+  user: tvili999
+  ssh_key:
+    from_secret: dev.central.agibolt.hu
+
+clone:
+  disable: true
+
+steps:
+  - name: Pull
+    commands:
+      - cd /logger
+      - ./rebuild.sh

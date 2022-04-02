@@ -24,6 +24,8 @@ module.exports = (env) => ({
     devServer: {
         host: "0.0.0.0",
         port: 8900,
+        compress: true,
+        disableHostCheck: true,
         proxy: {
             "/api": {
                 target: "http://backend:9000",
